@@ -1,0 +1,36 @@
+# Les Clés de la Réussite — configuration Apache (Hostinger, hébergement mutualisé/code classique)
+# À adapter si l'hébergement définitif diffère (voir note de livraison : Hostinger Website Builder vs hébergement fichiers/PHP).
+
+RewriteEngine On
+
+# --- Migration depuis l'ancien site (Hostinger Website Builder) ---
+Redirect 301 /about /a-propos
+Redirect 301 /privacy-policy /politique-confidentialite
+Redirect 301 /terms-and-conditions /mentions-legales
+
+# --- Page retirée définitivement (ancienne page "Nos logements") ---
+# Statut 410 Gone : contenu volontairement et définitivement retiré, pas de remplacement équivalent.
+RewriteRule ^nos-logements/?$ - [G,L]
+ErrorDocument 410 /nos-logements/index.html
+
+# --- Page 404 personnalisée ---
+ErrorDocument 404 /404.html
+
+# --- Sécurité de base ---
+Options -Indexes
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# --- Compression et cache (facultatif mais recommandé en production) ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
