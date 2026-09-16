@@ -208,6 +208,11 @@ section { padding: 64px 0; }
 .card h3 { margin-bottom: 8px; }
 .card p:last-child { margin-bottom: 0; }
 
+.card-photo { padding: 0; overflow: hidden; }
+.card-photo .card-photo-img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.card-photo .card-body { padding: 22px 24px; }
+.card-photo h3 { margin-bottom: 8px; }
+
 /* Étapes numérotées (Comment ça marche) */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; grid-template-columns: 1fr; }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(4, 1fr); } }
@@ -304,6 +309,9 @@ details.faq-item .faq-answer p:last-child { margin-bottom: 0; }
 /* ---------- Bandeau partenaires / logos ---------- */
 .logo-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 36px; opacity: 0.9; }
 .logo-strip span { font-family: var(--font-titre); font-size: 1.15rem; color: var(--vert); }
+.logo-strip .logo-item { display: flex; align-items: center; gap: 10px; }
+.logo-strip img { height: 30px; width: auto; display: block; }
+.logo-strip .logo-item span { font-size: 0.98rem; font-weight: 700; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--vert); color: #eef2ef; padding: 56px 0 28px; }
