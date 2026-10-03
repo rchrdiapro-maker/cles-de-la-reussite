@@ -357,3 +357,17 @@ details.faq-item .faq-answer p:last-child { margin-bottom: 0; }
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
+
+/* ---------- Ajustements pages locales, footer, références ---------- */
+.footer-logo { display: inline-block; margin-bottom: 14px; }
+.footer-logo img { height: 58px; width: auto; }
+
+.tools-title { text-align: center; font-size: clamp(1.5rem, 2.6vw, 1.9rem); margin: 0 auto 28px; }
+.logo-ref { display: flex; justify-content: center; margin-top: 36px; }
+.logo-ref img { height: 84px; width: auto; mix-blend-mode: multiply; }
+
+.page-local .section-head { max-width: none; }
+.page-local .section-head p,
+.page-local .page-banner .lead { max-width: none; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.page-local .section-head h2 { max-width: none; }
+.page-local .grid { margin-bottom: 64px; }
