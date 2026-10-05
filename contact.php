@@ -53,11 +53,14 @@ if (!empty($_POST['site-web'])) {
 }
 
 $configFile = __DIR__ . '/config.php';
-if (!is_file($configFile)) {
-    error_log('[contact.php] config.php introuvable : copier config.example.php en config.php.');
-    respond(false, "Le formulaire n'est pas encore disponible. Merci de nous appeler au 07 46 28 69 10.", 503);
+// Sans config.php (SMTP non configuré), on retombe sur l'ancien envoi par mail() PHP pour ne pas
+// interrompre le formulaire pendant la mise en place. À corriger en créant config.php.
+$cfg = is_file($configFile) ? require $configFile : null;
+const FALLBACK_TO = 'ccr78280@gmail.com';
+$mailHost = preg_replace('/[^a-z0-9.\-]/', '', preg_replace('/^www\./', '', preg_replace('/:\d+$/', '', $host))) ?: 'lesclesdelareussite-conciergerie.com';
+if ($cfg === null) {
+    error_log('[contact.php] config.php introuvable : envoi de secours par mail() PHP. Copier config.example.php en config.php.');
 }
-$cfg = require $configFile;
 
 $nom = clean((string)($_POST['nom'] ?? ''), 120);
 $email = clean((string)($_POST['email'] ?? ''), 160);
@@ -79,7 +82,7 @@ if ($errors) {
 }
 
 // Limitation du nombre d'envois par IP (fichier temporaire, aucune donnée personnelle conservée : IP hachée)
-$limit = (int)($cfg['rate_limit_per_hour'] ?? 5);
+$limit = (int)(($cfg ?? [])['rate_limit_per_hour'] ?? 5);
 if ($limit > 0) {
     $file = sys_get_temp_dir() . '/clr-contact-' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? 'x') . __DIR__) . '.json';
     $now = time();
@@ -88,6 +91,23 @@ if ($limit > 0) {
     if (count($hits) >= $limit) {
         respond(false, 'Trop de demandes envoyées. Merci de réessayer plus tard ou de nous appeler au 07 46 28 69 10.', 429);
     }
+}
+
+if ($cfg === null) {
+    $body = "Nouvelle demande reçue depuis le site :\n\nNom : {$nom}\nE-mail : {$email}\n"
+        . 'Téléphone : ' . ($telephone !== '' ? $telephone : 'non renseigné') . "\n"
+        . "Commune du logement : {$commune}\nType de logement : {$typeLogement}\n\nMessage :\n{$message}\n";
+    $headers = "From: Les Clés de la Réussite <no-reply@{$mailHost}>\r\nReply-To: {$email}\r\nContent-Type: text/plain; charset=utf-8";
+    $subject = '=?UTF-8?B?' . base64_encode("Nouvelle demande d'estimation — {$commune} ({$typeLogement})") . '?=';
+    if (!@mail(FALLBACK_TO, $subject, $body, $headers)) {
+        error_log('[contact.php] Échec de mail() (envoi de secours).');
+        respond(false, "L'envoi a échoué. Merci de réessayer ou de nous appeler directement au 07 46 28 69 10.", 502);
+    }
+    if ($limit > 0) {
+        $hits[] = time();
+        @file_put_contents($file, json_encode($hits), LOCK_EX);
+    }
+    respond(true, 'Votre demande a bien été envoyée. Nous revenons vers vous rapidement.');
 }
 
 $mail = new PHPMailer(true);
