@@ -20,10 +20,10 @@ Ce serveur local sert les fichiers statiques, simule `contact.php` (aucun e-mail
 
 ## Formulaire de contact : envoi par SMTP
 
- envoie les demandes par SMTP (PHPMailer, dossier ). Mise en place sur l'hébergement PHP :
+`contact.php` envoie les demandes par SMTP (PHPMailer, dossier `vendor/phpmailer/`). Mise en place sur l'hébergement PHP :
 
-1. Copier  en  **directement sur le serveur** (ce fichier est exclu de Git et bloqué par ) et renseigner le serveur SMTP, l'identifiant, le mot de passe et le destinataire.
-2. Tester en SSH :  (affiche le dialogue SMTP, mot de passe masqué).
+1. Copier `config.example.php` en `config.php` **directement sur le serveur** (ce fichier est exclu de Git et bloqué par `.htaccess`) et renseigner le serveur SMTP, l'identifiant, le mot de passe et le destinataire.
+2. Tester en SSH : `php tools/smtp-test.php` (affiche le dialogue SMTP, mot de passe masqué).
 3. Envoyer une demande réelle depuis la page Contact et vérifier la réception (et le dossier spam).
 
 Protections incluses : validation serveur, champ piège anti-robots, limite de 5 envois/heure/IP, contrôle d'origine, nettoyage des en-têtes. Les erreurs techniques vont dans le journal d'erreurs PHP de l'hébergement.
