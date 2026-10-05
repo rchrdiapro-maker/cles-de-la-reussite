@@ -17,6 +17,17 @@ Puis ouvrir [http://localhost:8900](http://localhost:8900). Le port peut être c
 
 Ce serveur local sert les fichiers statiques, simule `contact.php` (aucun e-mail n'est envoyé, la soumission est seulement journalisée dans la console) et applique les mêmes redirections 301 / statut 410 que `.htaccess` en production.
 
+
+## Formulaire de contact : envoi par SMTP
+
+`contact.php` envoie les demandes par SMTP (PHPMailer, dossier `vendor/phpmailer/`). Mise en place sur l'hébergement PHP :
+
+1. Copier `config.example.php` en `config.php` **directement sur le serveur** (ce fichier est exclu de Git et bloqué par `.htaccess`) et renseigner le serveur SMTP, l'identifiant, le mot de passe et le destinataire.
+2. Tester en SSH : `php tools/smtp-test.php` (affiche le dialogue SMTP, mot de passe masqué).
+3. Envoyer une demande réelle depuis la page Contact et vérifier la réception (et le dossier spam).
+
+Protections incluses : validation serveur, champ piège anti-robots, limite de 5 envois/heure/IP, contrôle d'origine, nettoyage des en-têtes. Les erreurs techniques vont dans le journal d'erreurs PHP de l'hébergement.
+
 ## Structure du projet
 
 ```
