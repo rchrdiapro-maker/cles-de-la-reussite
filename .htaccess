@@ -3,6 +3,11 @@
 
 RewriteEngine On
 
+# --- Domaine unique : www redirige vers le domaine sans www ---
+# HTTPS est déjà imposé par Hostinger : ne pas ajouter de règle HTTPS ici (derrière le CDN, elle provoquerait une boucle de redirection).
+RewriteCond %{HTTP_HOST} ^www\.lesclesdelareussite-conciergerie\.com$ [NC]
+RewriteRule ^(.*)$ https://lesclesdelareussite-conciergerie.com/$1 [R=301,L]
+
 # --- Migration depuis l'ancien site (Hostinger Website Builder) ---
 Redirect 301 /about /a-propos
 Redirect 301 /privacy-policy /politique-confidentialite
@@ -22,12 +27,6 @@ RewriteRule ^(.+)/$ /$1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.html -f
 RewriteRule ^(.+)$ /$1/index.html [L]
-
-# --- HTTPS et domaine unique : à activer une fois le certificat SSL et le domaine définitifs confirmés ---
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://lesclesdelareussite-conciergerie.com/$1 [R=301,L]
-# RewriteCond %{HTTP_HOST} ^www. [NC]
-# RewriteRule ^(.*)$ https://lesclesdelareussite-conciergerie.com/$1 [R=301,L]
 
 # --- Page 404 personnalisée ---
 ErrorDocument 404 /404.html
