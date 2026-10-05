@@ -12,7 +12,7 @@ Write-Host "Prévisualisation : http://localhost:$port/"
 $mime = @{
   ".html"="text/html; charset=utf-8"; ".css"="text/css"; ".js"="application/javascript";
   ".png"="image/png"; ".jpg"="image/jpeg"; ".jpeg"="image/jpeg"; ".svg"="image/svg+xml";
-  ".xml"="application/xml; charset=utf-8"; ".txt"="text/plain; charset=utf-8"; ".ico"="image/x-icon";
+  ".xml"="application/xml; charset=utf-8"; ".txt"="text/plain; charset=utf-8"; ".ico"="image/x-icon"; ".woff2"="font/woff2"; ".webp"="image/webp";
   ".json"="application/json; charset=utf-8"; ".webmanifest"="application/manifest+json"
 }
 

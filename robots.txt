@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://lesclesdelareussite-conciergerie.com/sitemap.xml
+Disallow: /
