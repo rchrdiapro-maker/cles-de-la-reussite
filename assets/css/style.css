@@ -377,3 +377,9 @@ details.faq-item .faq-answer p:last-child { margin-bottom: 0; }
 .page-local .page-banner .lead { max-width: none; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 .page-local .section-head h2 { max-width: none; }
 .page-local .grid { margin-bottom: 64px; }
+
+/* Portrait du fondateur (page À propos) */
+.founder-photo { margin: 0; align-self: start; }
+.founder-photo img { width: 100%; max-width: 440px; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: var(--rayon); box-shadow: var(--ombre); }
+.founder-photo figcaption { margin-top: 12px; font-size: 0.88rem; color: #5b6560; }
+@media (min-width: 900px) { .founder-photo { order: -1; } }
