@@ -135,7 +135,7 @@ function graphFor(p) {
   };
   if (p.crumbs.length) page.breadcrumb = { '@id': `${url}#breadcrumb` };
   if (p.type === 'FAQPage') page.mainEntity = faqEntities();
-  if (p.type === 'AboutPage') page.mainEntity = { '@type': 'Person', name: 'Saïd', jobTitle: 'Fondateur de Les Clés de la Réussite', description: "Propriétaire à Guyancourt, parcours en direction financière et expérience d'agent immobilier indépendant.", worksFor: { '@id': `${BASE}/#organization` } };
+  if (p.type === 'AboutPage') page.mainEntity = { '@type': 'Person', name: 'Saïd', jobTitle: 'Fondateur de Les Clés de la Réussite', description: "Propriétaire à Guyancourt, parcours en direction financière et expérience d'agent immobilier indépendant.", image: `${BASE}/assets/img/said-fondateur.webp`, worksFor: { '@id': `${BASE}/#organization` } };
   g.push(page);
   if (p.crumbs.length) {
     const items = [['Accueil', '/'], ...p.crumbs].map(([name, u], i) => ({ '@type': 'ListItem', position: i + 1, name, item: BASE + (u === '/' ? '/' : u) }));
